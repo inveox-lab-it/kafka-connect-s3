@@ -14,10 +14,10 @@ apply from: '../dependencies.gradle'
 description = "Tests against real Kafka Connect"
 
 dependencies {
-	compile project(':sink')
-	compile project(':source')
+	implementation project(':sink')
+	implementation project(':source')
 
 	libraries.with {
-      testCompile curatorTest, junit, kafka, kafkaConnectRuntime, mockito, spotifyDockerClient
+      testImplementation curatorTest, junit, kafka, kafkaConnectRuntime, mockito, spotifyDockerClient
 	}
 }

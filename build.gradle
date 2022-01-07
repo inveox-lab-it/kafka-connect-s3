@@ -41,7 +41,6 @@ ext {
 allprojects {
   apply plugin: 'java'
   apply plugin: 'idea'
-  apply plugin: 'maven'
 
   group = 'com.spredfast.kafka.connect.s3'
   sourceCompatibility = 1.8
@@ -63,8 +62,8 @@ configurations {
 }
 
 dependencies {
-  compile project(':sink')
-  compile project(':source')
+  implementation project(':sink')
+  implementation project(':source')
   javaagent libraries.javaagent
 }
 
@@ -123,37 +122,6 @@ shadowJar {
   relocate 'org.apache.commons', 'com.spredfast.shade.apache.commons'
   relocate 'org.apache.http', 'com.spredfast.shade.apache.http'
   relocate 'org.joda', 'com.spredfast.shade.joda'
-}
-
-helm {
-  xdgCacheHome = file("$buildDir/helm/cache")
-
-  filtering.enabled = false
-
-  lint {
-    strict = false
-  }
-
-  charts {
-    pipeline {
-      chartName = "kafka-s3-backup"
-      sourceDir = file("$rootDir/helm/kafka-s3-backup")
-    }
-  }
-
-  publishing {
-    repositories {
-      custom {
-        url = uri(System.getenv("HELM_ARTIFACTORY_URL") ?: "")
-        uploadMethod = 'PUT'
-        uploadPath = '/{name}/{filename}'
-        credentials {
-          username = System.getenv("AWS_ARTIFACTORY_USER")
-          password = System.getenv("AWS_ARTIFACTORY_PASS")
-        }
-      }
-    }
-  }
 }
 
 docker {

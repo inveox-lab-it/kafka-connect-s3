@@ -14,10 +14,10 @@ apply from: '../dependencies.gradle'
 description = "Kafka Connect Source that reads from S3"
 
 dependencies {
-	compile project(':common')
+	implementation project(':common')
 
-	testCompile project(':sink')
+	testImplementation project(':sink')
 	libraries.with {
-      testCompile junit, mockito
+      testImplementation junit, mockito
 	}
 }
